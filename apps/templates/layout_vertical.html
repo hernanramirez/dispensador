@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+{% block html_attribute %}{% endblock html_attribute %}
+
+{% block title %}{% endblock title %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block body_attribute %}{% endblock body_attribute %}
+
+{% block content %}
+
+  {% block preloader %}{% endblock preloader %}
+
+  <div class="wrapper">
+
+    {% include 'partials/topbar.html' %}
+    {% include 'partials/main-nav.html' %}
+
+    <div class="page-content">
+
+      <div class="container-xxl">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show mt-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block page_title %}{% endblock page_title %}
+
+        {% block page_content %}{% endblock page_content %}
+      </div>
+
+      {% include 'partials/footer.html' %}
+    </div>
+  </div>
+
+  {% block modal %}{% endblock modal %}
+  
+
+{% endblock content %}
+
+{% block extra_javascript %}{% endblock extra_javascript %}

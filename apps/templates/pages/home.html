@@ -1,3 +1,113 @@
-{% extends "base.html" %}
+{% extends 'layout_vertical.html' %}
+
+{% load static i18n %}
+
+{% block title %}Welcome{% endblock title %}
 
 
+{% block page_title %}
+{% include "partials/page-title.html" with page_title='Dashboard' sub_title='Pastillero' %}
+{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-primary-subtle border-primary border text-primary-emphasis mb-4">
+            <div class="card-body d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <i class="bx bx-bot fs-1 text-primary"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h4 class="mb-1">Monitoreo en Tiempo Real</h4>
+                    <p class="mb-0">Supervisa el estado del robot dispensador instantáneamente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Card Estado Motor -->
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="avatar-sm mx-auto mb-3">
+                    <span id="motor-icon-bg" class="avatar-title rounded-circle bg-secondary-subtle text-secondary fs-24">
+                        <i id="motor-icon" class="bx bx-power-off"></i>
+                    </span>
+                </div>
+                <h5 class="font-size-15 mb-1">Estado del Motor</h5>
+                <p id="motor-status-text" class="text-muted mb-0 fw-bold">Cargando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Compartimiento Actual -->
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="avatar-sm mx-auto mb-3">
+                    <span class="avatar-title rounded-circle bg-info-subtle text-info fs-24">
+                        <i class="bx bx-box"></i>
+                    </span>
+                </div>
+                <h5 class="font-size-15 mb-1">Compartimiento Actual</h5>
+                <h2 id="compartment-number" class="mb-0 text-info fw-bold">-</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock page_content %}
+
+{% block extra_javascript %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const motorIconBg = document.getElementById('motor-icon-bg');
+        const motorIcon = document.getElementById('motor-icon');
+        const motorStatusText = document.getElementById('motor-status-text');
+        const compartmentNumber = document.getElementById('compartment-number');
+
+        function fetchRobotStatus() {
+            fetch("{% url 'core:robot_status_api' %}")
+                .then(response => response.json())
+                .then(res => {
+                    if (res.status === 'success') {
+                        const data = res.data;
+                        
+                        // Update Compartment
+                        compartmentNumber.textContent = data.compartimiento_actual || '-';
+                        
+                        // Update Motor Status
+                        const estado = data.estado_motor;
+                        motorStatusText.textContent = estado;
+                        
+                        if (estado.toLowerCase() === 'detenido') {
+                            motorIconBg.className = 'avatar-title rounded-circle bg-secondary-subtle text-secondary fs-24';
+                            motorIcon.className = 'bx bx-pause-circle';
+                        } else if (estado.toLowerCase() === 'desconectado') {
+                            motorIconBg.className = 'avatar-title rounded-circle bg-danger-subtle text-danger fs-24';
+                            motorIcon.className = 'bx bx-power-off';
+                        } else {
+                            // Asumimos que cualquier otro estado es movimiento
+                            motorIconBg.className = 'avatar-title rounded-circle bg-success-subtle text-success fs-24';
+                            motorIcon.className = 'bx bx-loader-circle bx-spin';
+                        }
+                    } else {
+                        motorStatusText.textContent = 'Desconectado / Sin datos';
+                        motorIconBg.className = 'avatar-title rounded-circle bg-danger-subtle text-danger fs-24';
+                        motorIcon.className = 'bx bx-error-circle';
+                        compartmentNumber.textContent = '-';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching robot status:', error);
+                });
+        }
+
+        // Fetch immediately and then every 1 second
+        fetchRobotStatus();
+        setInterval(fetchRobotStatus, 1000);
+    });
+</script>
+{% endblock extra_javascript %}

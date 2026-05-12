@@ -5,12 +5,13 @@ from django.urls import include
 from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path("", login_required(TemplateView.as_view(template_name="pages/home.html")), name="home"),
     path(
         "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
+        login_required(TemplateView.as_view(template_name="pages/about.html")),
         name="about",
     ),
     # Django Admin, use {% url 'admin:index' %}
@@ -18,6 +19,7 @@ urlpatterns = [
     # User management
     path("users/", include("apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("core/", include("apps.core.urls", namespace="core")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files

@@ -1,0 +1,40 @@
+{% extends "layout_vertical.html" %}
+
+{% block title %}Eliminar Robot{% endblock %}
+
+{% block page_title %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="mb-0 fw-semibold">Eliminar Robot</h4>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Pastillero</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'core:robot_list' %}">Robots</a></li>
+                <li class="breadcrumb-item active">Eliminar</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-danger-subtle">
+                <h5 class="card-title text-danger mb-0">Confirmar Eliminación</h5>
+            </div>
+            <div class="card-body">
+                <p>¿Está seguro de que desea eliminar el robot <strong>{{ object.mac_address }}</strong>?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+                        <a href="{% url 'core:robot_list' %}" class="btn btn-light ms-2">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

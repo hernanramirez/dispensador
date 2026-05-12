@@ -330,3 +330,11 @@ SOCIALACCOUNT_FORMS = {"signup": "apps.users.forms.UserSocialSignupForm"}
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# MQTT Configuration
+MQTT_BROKER_HOST = env("MQTT_BROKER_HOST", default="localhost")
+MQTT_BROKER_PORT = env.int("MQTT_BROKER_PORT", default=1883)
+MQTT_USERNAME = env("MQTT_USERNAME", default="")
+MQTT_PASSWORD = env("MQTT_PASSWORD", default="")
+MQTT_KEEPALIVE = env.int("MQTT_KEEPALIVE", default=60)
+MQTT_CLIENT_ID = env("MQTT_CLIENT_ID", default="django_mqtt_client")

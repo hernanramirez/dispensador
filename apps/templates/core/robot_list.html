@@ -1,0 +1,75 @@
+{% extends "layout_vertical.html" %}
+
+{% load static i18n %}
+
+{% block title %}Robots{% endblock %}
+
+{% block page_title %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="mb-0 fw-semibold">Lista de Robots</h4>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Pastillero</a></li>
+                <li class="breadcrumb-item active">Robots</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Robots</h5>
+                <a href="{% url 'core:robot_create' %}" class="btn btn-primary btn-sm">
+                    <i class="bx bx-plus me-1"></i> Nuevo Robot
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 table-hover table-centered">
+                        <thead class="bg-light-subtle">
+                            <tr>
+                                <th>MAC Address</th>
+                                <th>Conectado</th>
+                                <th>Paciente Asignado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in robots %}
+                            <tr>
+                                <td>{{ r.mac_address }}</td>
+                                <td>
+                                    {% if r.is_connected %}
+                                    <span class="badge bg-success-subtle text-success">Sí</span>
+                                    {% else %}
+                                    <span class="badge bg-danger-subtle text-danger">No</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ r.patient|default:"-" }}</td>
+                                <td>
+                                    <a href="{% url 'core:robot_update' r.pk %}" class="btn btn-sm btn-soft-info" title="Editar">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'core:robot_delete' r.pk %}" class="btn btn-sm btn-soft-danger" title="Eliminar">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No hay robots registrados.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

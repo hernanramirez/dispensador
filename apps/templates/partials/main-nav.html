@@ -1,0 +1,95 @@
+{% load static i18n %}
+<div class="main-nav">
+  <!-- Sidebar Logo -->
+  <div class="logo-box">
+    <a href="/" class="logo-dark">
+      <img src="{% static 'images/logo-sm.png' %}" class="logo-sm" alt="logo sm" />
+      <img src="{% static 'images/logo-dark.png' %}" class="logo-lg" alt="logo dark" />
+    </a>
+
+    <a href="/" class="logo-light">
+      <img src="{% static 'images/logo-sm.png' %}" class="logo-sm" alt="logo sm" />
+      <img src="{% static 'images/logo-light.png' %}" class="logo-lg" alt="logo light" />
+    </a>
+  </div>
+
+  <!-- Menu Toggle Button (sm-hover) -->
+  <button type="button" class="button-sm-hover" aria-label="Show Full Sidebar">
+    <iconify-icon icon="iconamoon:arrow-left-4-square-duotone" class="button-sm-hover-icon"></iconify-icon>
+  </button>
+
+  <div class="scrollbar" data-simplebar>
+    <ul class="navbar-nav" id="navbar-nav">
+      <li class="menu-title">Configuración</li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">
+          <span class="nav-icon">
+            <iconify-icon icon="iconamoon:home-duotone"></iconify-icon>
+          </span>
+          <span class="nav-text"> Principal </span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:list' %}">
+          <span class="nav-icon">
+            <iconify-icon icon="iconamoon:profile-duotone"></iconify-icon>
+          </span>
+          <span class="nav-text"> Usuarios </span>
+        </a>
+      </li>
+
+      <li class="menu-title">Apps</li>
+
+      <li class="nav-item">
+        <a class="nav-link menu-arrow" href="#sidebarEcommerce" data-bs-toggle="collapse" role="button"
+          aria-expanded="false" aria-controls="sidebarEcommerce">
+          <span class="nav-icon">
+            <iconify-icon icon="iconamoon:shopping-bag-duotone"></iconify-icon>
+          </span>
+          <span class="nav-text"> Pastillero(M) </span>
+        </a>
+        <div class="collapse" id="sidebarEcommerce">
+          <ul class="nav sub-navbar-nav">
+            <li class="sub-nav-item">
+              <a class="sub-nav-link" href="{% url 'core:robot_list' %}">Robots</a>
+            </li>
+            <li class="sub-nav-item">
+              <a class="sub-nav-link" href="{% url 'core:compartimiento_list' %}">Compartimientos</a>
+            </li>
+            <li class="sub-nav-item">
+              <a class="sub-nav-link" href="{% url 'core:programacion_list' %}">Programaciones</a>
+            </li>
+            <li class="sub-nav-item">
+              <a class="sub-nav-link" href="{% url 'core:registro_list' %}">Registros Médicos</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+
+      <li class="nav-item">
+        <a class="nav-link menu-arrow" href="#sidebarInvoice" data-bs-toggle="collapse" role="button"
+          aria-expanded="false" aria-controls="sidebarInvoice">
+          <span class="nav-icon">
+            <iconify-icon icon="iconamoon:invoice-duotone"></iconify-icon>
+          </span>
+          <span class="nav-text"> Notificaciones </span>
+        </a>
+        <div class="collapse" id="sidebarInvoice">
+          <ul class="nav sub-navbar-nav">
+            <li class="sub-nav-item">
+              <a class="sub-nav-link" href="#">Notificaciones</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- end Pages Menu -->
+      <!-- end Demo Menu Item -->
+    </ul>
+  </div>
+</div>

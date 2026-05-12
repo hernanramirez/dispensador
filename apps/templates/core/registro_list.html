@@ -1,0 +1,71 @@
+{% extends "layout_vertical.html" %}
+
+{% load static i18n %}
+
+{% block title %}Registros Médicos{% endblock %}
+
+{% block page_title %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="mb-0 fw-semibold">Historial de Registros Médicos</h4>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Pastillero</a></li>
+                <li class="breadcrumb-item active">Registros Médicos</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Registros Médicos</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 table-hover table-centered">
+                        <thead class="bg-light-subtle">
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Robot</th>
+                                <th>Compartimiento</th>
+                                <th>Medicina</th>
+                                <th>Hora Programada</th>
+                                <th>Toma Exitosa</th>
+                                <th>Mensaje (Raw)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in registros %}
+                            <tr>
+                                <td>{{ r.fecha_hora|date:"Y-m-d H:i:s" }}</td>
+                                <td>{{ r.programacion.compartimiento.robot.mac_address }}</td>
+                                <td>{{ r.programacion.compartimiento.numero }}</td>
+                                <td>{{ r.programacion.compartimiento.medicina|default:"-" }}</td>
+                                <td>{{ r.programacion.hora_dispensado }}</td>
+                                <td>
+                                    {% if r.exitosa %}
+                                    <span class="badge bg-success-subtle text-success">Sí</span>
+                                    {% else %}
+                                    <span class="badge bg-danger-subtle text-danger">No</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ r.mensaje_confirmacion|default:"-"|truncatechars:30 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center">No hay registros médicos en el historial.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

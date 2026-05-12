@@ -1,31 +1,76 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% block bodyclass %}bg-light{% endblock bodyclass %}
+{% load i18n static %}
+
+{% block body_attribute %}class="authentication-bg"{% endblock body_attribute %}
 
 {% block css %}{{ block.super }}{% endblock css %}
+
 {% block title %}
   {% block head_title %}
-    {% trans "Sign In" %}
+    {% trans "Auth" %}
   {% endblock head_title %}
 {% endblock title %}
+
 {% block body %}
-  <div class="d-flex justify-content-center h-100 py-4">
-    <div class="col-md-4 py-4 my-4 px-4">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-            {{ message }}
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      {% endif %}
-      {% block content %}
-      {% endblock content %}
-      {% block extra_body %}
-      {% endblock extra_body %}
+<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-12">
+                <div class="card auth-card">
+                    <div class="card-body p-0">
+                        <div class="row align-items-center g-0">
+                            <div class="col-lg-6 d-none d-lg-inline-block border-end">
+                                <div class="auth-page-sidebar">
+                                    <img src="{% static 'images/sign-in.svg' %}" alt="auth" class="img-fluid"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-4">
+                                    <div class="mx-auto mb-4 text-center auth-logo">
+                                        <a href="/" class="logo-dark">
+                                            <img src="{% static 'images/logo-sm.png' %}" height="30" class="me-1" alt="logo sm"/>
+                                            <img src="{% static 'images/logo-dark.png' %}" height="24" alt="logo dark"/>
+                                        </a>
+
+                                        <a href="/" class="logo-light">
+                                            <img src="{% static 'images/logo-sm.png' %}" height="30" class="me-1" alt="logo sm"/>
+                                            <img src="{% static 'images/logo-light.png' %}" height="24" alt="logo light"/>
+                                        </a>
+                                    </div>
+                                    
+                                    {% if messages %}
+                                      {% for message in messages %}
+                                        <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                          {{ message }}
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                      {% endfor %}
+                                    {% endif %}
+
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-md-10">
+                                            {% block content %}
+                                            {% endblock content %}
+                                        </div>
+                                    </div>
+                                    
+                                    {% block extra_body %}
+                                    {% endblock extra_body %}
+                                    
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end card-body -->
+                </div>
+                <!-- end card -->
+
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
     </div>
-  </div>
+</div>
 {% endblock body %}

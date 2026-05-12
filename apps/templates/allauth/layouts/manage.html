@@ -1,6 +1,30 @@
-{% extends "base.html" %}
+{% extends "layout_vertical.html" %}
 
-{% block main %}
-  {% block content %}
-  {% endblock content %}
-{% endblock main %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage Account" %}{% endblock %}
+
+{% block page_title %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="mb-0 fw-semibold">{% trans "Manage Account" %}</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                {% block main %}
+                {% block content %}
+                {% endblock content %}
+                {% endblock main %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

@@ -1,0 +1,46 @@
+{% extends "layout_vertical.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+{% if object %}Editar Programación{% else %}Nueva Programación{% endif %}
+{% endblock title %}
+
+{% block page_title %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="mb-0 fw-semibold">{% if object %}Editar Programación{% else %}Nueva Programación{% endif %}</h4>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Pastillero</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'core:programacion_list' %}">Programaciones</a></li>
+                <li class="breadcrumb-item active">{% if object %}Editar{% else %}Nuevo{% endif %}</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Formulario de Programación</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            {% if object %}Actualizar{% else %}Crear{% endif %}
+                        </button>
+                        <a href="{% url 'core:programacion_list' %}" class="btn btn-light ms-2">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
